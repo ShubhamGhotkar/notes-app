@@ -1,0 +1,126 @@
+:root {
+  --color-primary: rgb(138, 221, 13);
+  --color-primary-hover: rgba(138, 221, 13, 0.486);
+  --color-back: rgba(0, 255, 255, 0.313);
+  --color-sky-blue: rgb(44, 150, 192);
+
+  --text-col: white;
+  --col-whitesmoke: whitesmoke;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+  font-family: sans-serif;
+}
+body {
+  height: 100vh;
+  background-color: var(--color-back);
+}
+
+.container {
+  position: relative;
+
+  &__btn {
+    border: none;
+    font-size: 1.6rem;
+    padding: 1rem 1.5rem;
+    color: var(--text-col);
+    border-radius: 0.5rem;
+    background-color: var(--color-primary);
+    cursor: pointer;
+
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+  }
+
+  &__text {
+    height: 45rem;
+    width: 40rem;
+
+    position: absolute;
+    top: 8rem;
+    left: 4rem;
+
+    &--header {
+      height: 10%;
+      width: 100%;
+
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background-color: var(--color-primary);
+
+      &--para {
+        font-size: 1.6rem;
+        color: var(--text-col);
+        margin-left: auto;
+      }
+    }
+
+    &--text-area {
+      width: 100%;
+      height: 90%;
+
+      font-size: 2rem;
+      padding: 1.5rem;
+      border: none;
+      letter-spacing: 2px;
+      line-height: 1.5;
+      resize: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.toggle {
+  width: 4rem;
+  height: 2rem;
+  padding: 0.8rem 1.8rem;
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  margin: 0 1.5rem 0 1rem;
+  background-color: var(--col-whitesmoke);
+  border: 1px solid var(--color-sky-blue);
+  box-shadow: 0 0 2rem var(--col-whitesmoke);
+  cursor: pointer;
+
+  position: relative;
+
+  &__cir {
+    height: 2rem;
+    width: 2rem;
+    z-index: 99;
+    border-radius: 50%;
+    transform: translateY(-1px);
+    background-color: var(--color-sky-blue);
+
+    position: absolute;
+    top: 0;
+    left: -1px;
+  }
+}
+.delete-icon {
+  height: 2.4rem;
+  width: 2.4rem;
+  cursor: pointer;
+  fill: var(--text-col);
+  margin-right: 1rem;
+}
+
+.hidden {
+  opacity: 0;
+}
