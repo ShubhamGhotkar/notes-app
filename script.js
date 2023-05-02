@@ -25,38 +25,66 @@ const html = `<div class="container__text--header">
                      ></textarea>`;
 
 /*     FUNCTION                         */
-const createNote = (e) => {
-  e.preventDefault();
-  createEle();
-  // GET INPUT FROM TEXTAREA
-  let obj = { inputText: "", toggle: false };
-  localData.push(obj);
-  inputField();
-  updateEntry(localData);
-};
+function runMulFun(itm, id) {
+  deleteBtnFun();
+  toggleBtn();
+  addStyleToToggle(itm, id);
+}
 
-function inputField() {
-  const allTextArea = document.querySelectorAll(".text-area");
-  allTextArea.forEach((itm, ind) => {
-    itm.addEventListener("input", (e) => {
-      e.preventDefault();
-      if (localData[ind].toggle) {
-        itm.setAttribute("editable", false);
-        // return;
-      } else {
-        itm.setAttribute("editable", true);
-        localData[ind].inputText = e.target.value;
-        updateEntry(localData);
-      }
-    });
-  });
+function getElementArray(ele) {
+  return document.querySelectorAll(ele);
 }
 
 function updateEntry(arr) {
   if (!arr.toggle) localStorage.setItem("notesArray", JSON.stringify(arr));
 }
 
-window.addEventListener("click", inputField);
+const createNote = (e) => {
+  e.preventDefault();
+  createEle();
+  // GET INPUT FROM TEXTAREA
+  let obj = { inputText: "", toggle: false };
+  localData = [...localData, obj];
+  inputField();
+  updateEntry(localData);
+};
+
+// FUNCTION FOR DELETE BUTTON
+function deleteBtnFun() {
+  document.querySelectorAll(".delete-icon").forEach((itm, i) => {
+    itm.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      localData = localData.filter((itm, x) => localData.indexOf(itm) != i);
+
+      updateEntry(localData);
+
+      const parent = itm.parentElement.parentElement;
+      localStorage.removeItem("mytime");
+      parent.remove();
+    });
+  });
+}
+
+function inputField() {
+  getElementArray(".text-area").forEach((itm, ind) => {
+    itm.addEventListener("input", (e) => {
+      // e.preventDefault();
+
+      let { inputText, toggle } = localData[ind];
+      // if (toggle) {
+      // itm.setAttribute("readonly", true);
+      // } else {
+      console.log(inputText,toggle);
+
+      // itm.setAttribute("readonly", false);
+      localData[ind].inputText = e.target.value;
+      updateEntry(localData);
+      // }
+    });
+  });
+}
+
 function createEle(text = "") {
   // create element
   const divEle = document.createElement("div");
@@ -66,36 +94,54 @@ function createEle(text = "") {
   textContainer.appendChild(divEle);
 
   // ASSIGN VALUE
-  const allTextArea = document.querySelectorAll(".text-area");
+
   if (text != "") {
-    allTextArea[allTextArea.length - 1].value = text.inputText;
+    let textEle = getElementArray(".text-area");
+    textEle[textEle.length - 1].value = text;
   }
 }
-//
+
+//TOGGLE BUTTON
+function addStyleToToggle(itm, ind = 0) {
+  const allToggleCir = getElementArray(".toggle__cir");
+  allToggleCir[ind].style.left = localData[ind].toggle ? "-1px" : "2rem";
+  allToggleCir[ind].style.backgroundColor = localData[ind].toggle
+    ? "rgb(44, 150, 192)"
+    : "#fff";
+
+  itm.style.backgroundColor = localData[ind].toggle
+    ? "whitesmoke"
+    : "rgb(44, 150, 192)";
+}
+
+function toggleBtn() {
+  let toggleEle = getElementArray(".toggle");
+  toggleEle.forEach((itm, ind) => {
+    itm.addEventListener("click", function (e) {
+      e.preventDefault();
+      localData[ind].toggle = !localData[ind].toggle;
+
+      addStyleToToggle(itm, ind);
+      updateEntry(localData);
+    });
+  });
+}
+
+// //
 const addBtn = document.querySelector(".container__btn");
 
 let localData = JSON.parse(localStorage.getItem("notesArray"));
 
 if (localData) {
   localData = localData.flatMap((num) => num);
-  localData.forEach((itm, ind) => createEle(itm));
+  localData.forEach((itm, id) => {
+    let { inputText } = itm;
+    createEle(inputText);
+    // runMulFun(itm, id);
+  });
 }
 
 //ADD EVENT ON ADDBTN
 addBtn.addEventListener("click", createNote);
-
-// EVENT LISTENER FOR DELETE OPERATION
-document.querySelectorAll(".delete-icon").forEach((itm, i) => {
-  itm.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    // TO DELETE ENTRY
-    localData = localData.filter((itm, x) => localData.indexOf(itm) != i);
-    // TO UPDATE ENTRY
-    updateEntry(localData);
-    // TO DELTE ELEMENT
-    const parent = itm.parentElement.parentElement;
-    localStorage.removeItem("mytime");
-    parent.remove();
-  });
-});
+window.addEventListener("click", inputField);
+window.addEventListener("load", runMulFun);
