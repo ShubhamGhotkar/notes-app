@@ -16,11 +16,16 @@ html {
   font-family: sans-serif; }
 
 body {
-  height: 100vh;
-  background-color: var(--color-back); }
+  background-color: var(--color-back);
+  display: grid;
+  place-items: center; }
 
 .container {
-  position: relative; }
+  position: relative;
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; }
   .container__btn {
     border: none;
     font-size: 1.6rem;
@@ -29,17 +34,20 @@ body {
     border-radius: 0.5rem;
     background-color: var(--color-primary);
     cursor: pointer;
-    position: absolute;
-    top: 2rem;
-    right: 4rem; }
+    margin-top: 2.5rem;
+    align-self: flex-end; }
     .container__btn:hover {
       background-color: var(--color-primary-hover); }
   .container__text {
-    height: 45rem;
-    width: 40rem;
-    position: absolute;
-    top: 8rem;
-    left: 4rem; }
+    width: 100%;
+    margin: 2rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem; }
+    .container__text--items {
+      flex: 0 0 31%;
+      margin-bottom: 2rem;
+      height: 35rem; }
     .container__text--header {
       height: 10%;
       width: 100%;

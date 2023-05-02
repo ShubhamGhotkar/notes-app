@@ -19,12 +19,19 @@ html {
   font-family: sans-serif;
 }
 body {
-  height: 100vh;
   background-color: var(--color-back);
+
+  display: grid;
+  place-items: center;
 }
 
 .container {
   position: relative;
+  width: 90vw;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
   &__btn {
     border: none;
@@ -34,10 +41,9 @@ body {
     border-radius: 0.5rem;
     background-color: var(--color-primary);
     cursor: pointer;
+    margin-top: 2.5rem;
 
-    position: absolute;
-    top: 2rem;
-    right: 4rem;
+    align-self: flex-end;
 
     &:hover {
       background-color: var(--color-primary-hover);
@@ -45,12 +51,18 @@ body {
   }
 
   &__text {
-    height: 45rem;
-    width: 40rem;
+    width: 100%;
+    margin: 2rem auto;
 
-    position: absolute;
-    top: 8rem;
-    left: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+
+    &--items {
+      flex: 0 0 31%;
+      margin-bottom: 2rem;
+      height: 35rem;
+    }
 
     &--header {
       height: 10%;
